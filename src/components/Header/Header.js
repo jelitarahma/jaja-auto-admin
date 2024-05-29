@@ -77,7 +77,7 @@ const Header = (props) => {
           <MenuIcon className={s.menuIcon} />
         </NavLink>
       </div>
-      <Form className="d-none d-sm-block" inline>
+      {/* <Form className="d-none d-sm-block" inline>
         <FormGroup>
           <InputGroup className='input-group-no-border'>
             <Input id="search-input" placeholder="Search Dashboard" className='focus'/>
@@ -88,9 +88,9 @@ const Header = (props) => {
             </InputGroupAddon>
           </InputGroup>
         </FormGroup>
-      </Form>
+      </Form> */}
       <Nav className="ml-auto">
-        <NavItem className="d-sm-none mr-4">
+        {/* <NavItem className="d-sm-none mr-4">
           <NavLink
             className=""
             href="#"
@@ -123,7 +123,7 @@ const Header = (props) => {
             <DropdownItem><img src={calendarIcon} alt="Calendar Icon"/><span>1 event has been canceled and ...</span></DropdownItem>
             <DropdownItem><img src={envelopeIcon} alt="Envelope Icon"/><span>you have 2 new messages</span></DropdownItem>
           </DropdownMenu>
-        </Dropdown>
+        </Dropdown> */}
         <Dropdown isOpen={notificationsOpen} toggle={() => toggleNotifications()} nav id="basic-nav-dropdown" className="ml-3">
           <DropdownToggle nav caret className="navbar-dropdown-toggle">
             <span className={`${s.avatar} rounded-circle float-left mr-2`}>

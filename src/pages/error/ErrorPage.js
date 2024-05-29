@@ -5,8 +5,8 @@ import {
 import { Link } from "react-router-dom";
 import s from "./ErrorPage.module.scss";
 
-import errorImage from "../../assets/errorImage.svg"
-import FooterIcon from "../../components/Icons/FooterIcon.js";
+// import errorImage from "../../assets/errorImage.svg"
+// import FooterIcon from "../../components/Icons/FooterIcon.js";
 
 const ErrorPage = () => {
   return (
@@ -19,19 +19,19 @@ const ErrorPage = () => {
         <p className={s.errorHelp}>
           But we're here to bring you back to safety
         </p>
-        <Link to="/template/dashboard">
+        <Link to="/jaja-auto/jaja-dashboard">
           <Button className={`${s.errorBtn} rounded-pill`} type="submit" color="secondary-red">
             Back to Home
           </Button>
         </Link>
       </div>
-      <div className={s.imageContainer}>
+      {/* <div className={s.imageContainer}>
         <img className={s.errorImage} src={errorImage} alt="Error page" width="80" />
       </div>
       <div className={s.footer}>
         <span className={s.footerLabel}>2021 &copy; Flatlogic. Hand-crafted & Made with</span>
         <FooterIcon />
-      </div>
+      </div> */}
     </div>
   );
 }

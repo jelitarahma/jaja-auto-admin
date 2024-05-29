@@ -1,7 +1,7 @@
 // -- React and related libs
 import React from "react";
-import { Switch, Route, Redirect } from "react-router";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect, withRouter } from "react-router-dom";
+// import { HashRouter } from "react-router-dom";
 
 // -- Redux
 import { connect } from "react-redux";
@@ -39,18 +39,18 @@ const App = (props) => {
   return (
     <div>
       <ToastContainer/>
-      <HashRouter>
+      <Router>
         <Switch>
-          <Route path="/" exact render={() => <Redirect to="/template/dashboard" />} />
-          <Route path="/template" exact render={() => <Redirect to="/template/dashboard"/>}/>
-          <PrivateRoute path="/template" dispatch={props.dispatch} component={LayoutComponent} />
+          <Route path="/" exact render={() => <Redirect to="/jaja-auto/jaja-dashboard" />} />
+          <Route path="/jaja-auto" exact render={() => <Redirect to="/jaja-auto/jaja-dashboard"/>}/>
+          <PrivateRoute path="/jaja-auto" dispatch={props.dispatch} component={LayoutComponent} />
           <Route path="/login" exact component={Login} />
           <Route path="/error" exact component={ErrorPage} />
           <Route path="/register" exact component={Register} />
           <Route component={ErrorPage}/>
-          <Route path='*' exact={true} render={() => <Redirect to="/error" />} />
+          <Route path='*' exact component={ErrorPage} />
         </Switch>
-      </HashRouter>
+      </Router>
     </div>
   );
 }

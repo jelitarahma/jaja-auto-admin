@@ -39,12 +39,41 @@ export function logoutUser() {
 
 export function loginUser(creds) {
   return (dispatch) => {
-    dispatch(receiveLogin());
-    if (creds.email.length > 0 && creds.password.length > 0) {
-      localStorage.setItem('authenticated', true)
-    } else {
-      dispatch(loginError('Something was wrong. Try again'));
-    }
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const raw = JSON.stringify({
+      "email": creds.email,
+      "password": creds.password
+    });
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+    };
+
+    fetch("https://staging-api.jaja.id/admin/login-admin", requestOptions)
+      .then(response => response.json())
+      .then(result => {
+        // Jika respons dari server adalah sukses, simpan token ke local storage
+        if (result.status.code === 200) {
+          localStorage.setItem('token', result.data.token);
+          localStorage.setItem('authenticated', true);
+          dispatch(receiveLogin());
+          // Redirect pengguna ke halaman yang diinginkan setelah login berhasil
+          // window.location.href = "/jaja-auto";
+        } else {
+          // Jika respons dari server adalah gagal, dispatch error message
+          dispatch(loginError(result.status.message));
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        dispatch(loginError('Something went wrong. Please try again.'));
+      });
   }
 }
+
 

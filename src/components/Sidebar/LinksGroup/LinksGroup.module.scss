@@ -9,10 +9,14 @@
     justify-content: left;
     align-items: center;
     text-decoration: none;
-    color: $text-color;
+    color: white;
     cursor: pointer;
     font-size: 1rem;
     font-weight: $font-weight-semi-bold;
+
+    &:hover {
+      color: #FFCB05;
+    }
   }
 
   > a {
@@ -51,18 +55,18 @@
 }
 
 a.headerLinkActive {
-  background-color: $violet;
+  background-color: #FFCB05;
   border-radius: .25rem;
   font-weight: $font-weight-semi-bold;
   font-size: 1rem;
-  color: $white;
+  color: #054F8B;
 
   i {
-    color: white !important;
+    color: #054F8B !important;
   }
 
   &:hover {
-    color: $white;
+    color: #054F8B;
   }
 
   svg {

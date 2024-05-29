@@ -39,7 +39,7 @@ const Register = (props) => {
     }))
   }
 
-  const { from } = props.location.state || { from: { pathname: '/template' } }
+  const { from } = props.location.state || { from: { pathname: '/jaja-auto' } }
 
   if (hasToken(JSON.parse(localStorage.getItem('authenticated')))) {
     return (

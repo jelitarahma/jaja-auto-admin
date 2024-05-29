@@ -1,44 +1,87 @@
 @import "../../styles/helpers";
 
+// .root {
+//   display: flex;
+//   flex-direction: column;
+//   width: $sidebar-width-open;
+//   position: absolute;
+//   left: 0;
+//   top: 0;
+//   bottom: 0;
+//   padding-left: 16px;
+//   background-color: #054F8B;
+//   overflow-y: auto;
+//   transition: height 1s;
+//   transform: translateX(-$sidebar-width-open);
+
+//   @media print {
+//     display: none;
+//   }
+
+//   :global(.sidebar-hide) & {
+//     display: none;
+//   }
+
+//   @media (max-width: breakpoint-max(sm)) {
+//     position: static !important;
+//     width: auto;
+//     margin: 12px 24px 0;
+//     border-radius: 8px;
+//     padding: 0;
+//     height: 0;
+//     transform: none;
+
+//     .logo,
+//     .sidebarAlerts,
+//     .sidebarLabels,
+//     .navTitle {
+//       display: none;
+//     }
+//   }
+// }
+
 .root {
   display: flex;
   flex-direction: column;
   width: $sidebar-width-open;
-  position: absolute;
+  position: fixed;
+  top: 0; // Tetapkan sesuai kebutuhan
+  bottom: 0; // Tetapkan sesuai kebutuhan
   left: 0;
-  top: 0;
-  bottom: 0;
-  padding-left: 16px;
-  background-color: $sidebar-color;
+  z-index: 1000; // Sesuaikan sesuai kebutuhan
+  background-color: #054F8B;
   overflow-y: auto;
-  transition: height 1s;
-  transform: translateX(-$sidebar-width-open);
-
+  overflow-x: hidden;
+  transition: width 0.3s;
+  
   @media print {
-    display: none;
-  }
-
-  :global(.sidebar-hide) & {
-    display: none;
-  }
-
-  @media (max-width: breakpoint-max(sm)) {
-    position: static !important;
-    width: auto;
-    margin: 12px 24px 0;
-    border-radius: 8px;
-    padding: 0;
-    height: 0;
-    transform: none;
-
-    .logo,
-    .sidebarAlerts,
-    .sidebarLabels,
-    .navTitle {
-      display: none;
-    }
-  }
+        display: none;
+      }
+    
+      :global(.sidebar-hide) & {
+        display: none;
+      }
+    
+      @media (max-width: breakpoint-max(sm)) {
+        position: static !important;
+        width: auto;
+        margin: 12px 24px 0;
+        border-radius: 8px;
+        padding: 0;
+        height: 0;
+        transform: none;
+        overflow-y: auto;
+        overflow-x: auto;
+    
+        .logo,
+        .sidebarAlerts,
+        .sidebarLabels,
+        .navTitle {
+          display: none;
+        }
+      }
 }
+
 
 //.sidebarOpen {
 //  @media (min-width: breakpoint-min(md)) {
@@ -55,7 +98,7 @@
 .logo {
   display: flex;
   align-items: center;
-  margin: 16px 0 24px;
+  margin: 16px 10px 16px;
   width: 100%;
 
   .title {
@@ -63,12 +106,14 @@
     font-size: 20px;
     font-weight: $font-weight-bold;
     text-transform: uppercase;
+    color: #FFCB05;
   }
 }
 
 .nav {
   padding-bottom: 10px;
-  overflow-y: auto;
+  padding-left: 15px;
+  overflow-y: hidden;
   overflow-x: hidden;
 
   li > a > span {
@@ -77,6 +122,13 @@
     align-items: center;
     width: 16px;
     height: 16px;
+  }
+
+  @media (max-width: breakpoint-max(sm)) {
+    padding-left: 10px;
+    padding-right: 10px;
+    overflow-y: auto;
+    overflow-x: auto;
   }
 }
 
@@ -88,3 +140,7 @@
   text-transform: uppercase;
 }
 
+.LogoImg{
+  width: 90px;
+  height: 50px;
+}
