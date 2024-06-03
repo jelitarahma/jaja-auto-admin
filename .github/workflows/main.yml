@@ -1,0 +1,30 @@
+name: CD - React.js
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install and Build 🔧
+      run: |
+        npm i
+        npm run build
+
+    - name: Deploy via SSH 🚀
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.PRIVATE_KEY }}
+        port: 22
+        script: |
+          cd /home/jaja/nimdaauto.jaja.id
+          rm -rf ./*
+          scp -r ${{ github.workspace }}/build/* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/home/jaja/nimdaauto.jaja.id/
