@@ -11,20 +11,24 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-
-    - name: Install and Build 🔧
-      run: |
-        npm ci
-        npm run build
-
-    - name: Deploy via SSH 🚀
-      uses: appleboy/ssh-action@master
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.PRIVATE_KEY }}
-        port: 22
-        script: |
-          cd /home/jaja/nimdaauto.jaja.id
-          rm -rf ./*
-          scp -r ${{ github.workspace }}/build/* ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/home/jaja/nimdaauto.jaja.id/
+        node-version: '14'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Build the app
+      run: npm run build
+
+    - name: Deploy to production
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
+      run: |
+        ssh $USERNAME@$HOST "rm -rf /home/jaja/nimdaauto.jaja.id/*"
+        scp -r build/* $USERNAME@$HOST:/home/jaja/nimdaauto.jaja.id/
+        ssh $USERNAME@$HOST "export NVM_DIR=~/.nvm && source ~/.nvm/nvm.sh && pm2 restart nimdaauto"
