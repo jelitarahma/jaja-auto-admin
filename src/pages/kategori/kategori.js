@@ -205,21 +205,23 @@ const Kategori = () => {
 
     return (
         <>
-            <h3>Kategori</h3>
-            <Breadcrumb
-                items={[
-                {
-                    title: (
-                    <>
-                        <span>Jaja Auto</span>
-                    </>
-                    ),
-                },
-                {
-                    title: 'Kategori',
-                },
-                ]}
-            className='mb-4'/>
+            <div style={{display:"flex", alignContent:"center", alignItems:"center"}}>
+                <h3 className='mr-3'>Kategori</h3>
+                <Breadcrumb
+                    items={[
+                        {
+                            title: (
+                            <>
+                                <span>Jaja Auto</span>
+                            </>
+                            ),
+                        },
+                        {
+                            title: 'Kategori',
+                        },
+                        ]}
+                className='mb-2'/>
+            </div>
             <Widget>
                 <Button type="primary" onClick={() => setModalAddVisible(true)} style={{ marginBottom: 16 }} className="m-3 float-right">
                     <PlusOutlined /> Add Category

@@ -41,9 +41,9 @@ const App = (props) => {
       <ToastContainer/>
       <Router>
         <Switch>
-          <Route path="/" exact render={() => <Redirect to="/jaja-auto/jaja-dashboard" />} />
-          <Route path="/jaja-auto" exact render={() => <Redirect to="/jaja-auto/jaja-dashboard"/>}/>
-          <PrivateRoute path="/jaja-auto" dispatch={props.dispatch} component={LayoutComponent} />
+          <Route path="/" exact render={() => <Redirect to="/dashboard/jaja-dashboard" />} />
+          <Route path="/dashboard" exact render={() => <Redirect to="/dashboard/jaja-dashboard"/>}/>
+          <PrivateRoute path="/dashboard" dispatch={props.dispatch} component={LayoutComponent} />
           <Route path="/login" exact component={Login} />
           <Route path="/error" exact component={ErrorPage} />
           <Route path="/register" exact component={Register} />

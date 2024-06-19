@@ -178,21 +178,23 @@ const Bank = () => {
 
     return (
         <>
-            <h3>Bank</h3>
-            <Breadcrumb
-                items={[
-                {
-                    title: (
-                    <>
-                        <span>Jaja Auto</span>
-                    </>
-                    ),
-                },
-                {
-                    title: 'Bank',
-                },
-                ]}
-            className='mb-4'/>
+            <div style={{display:"flex", alignContent:"center", alignItems:"center"}}>
+                <h3 className='mr-3'>Bank</h3>
+                <Breadcrumb
+                    items={[
+                        {
+                            title: (
+                            <>
+                                <span>Jaja Auto</span>
+                            </>
+                            ),
+                        },
+                        {
+                            title: 'Bank',
+                        },
+                        ]}
+                className='mb-2'/>
+            </div>
             <Widget>
                 <Button type="primary" onClick={() => setModalAddVisible(true)} style={{ marginBottom: 16 }} className="m-3 float-right">
                     <PlusOutlined /> Add Bank

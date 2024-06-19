@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Modal, Popconfirm, Form, Input, Upload, message, Breadcrumb } from 'antd';
+import { Table, Button, Modal, Popconfirm, Form, Input, Upload, message, Breadcrumb, ColorPicker } from 'antd';
 import { PlusOutlined, UploadOutlined, EditOutlined, DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 import Widget from '../../components/Widget/Widget';
 
@@ -173,7 +173,7 @@ const Brand = () => {
             dataIndex: 'action',
             render: (text, record) => (
                 <span>
-                    <Button type="default" icon={<EyeOutlined />} onClick={() => handleDetail(record)} />
+                    <Button type="default" icon={<EyeOutlined />} onClick={() => handleDetail(record)} className='mr-2'/>
                     <Button type="primary" onClick={() => handleEdit(record)} icon={<EditOutlined />} />
                     <Popconfirm
                         title="Are you sure to delete this item?"
@@ -201,21 +201,23 @@ const Brand = () => {
 
     return (
         <>
-            <h3>Product</h3>
-            <Breadcrumb
-                items={[
-                {
-                    title: (
-                    <>
-                        <span>Jaja Auto</span>
-                    </>
-                    ),
-                },
-                {
-                    title: 'Brand',
-                },
-                ]}
-            className='mb-4'/>
+            <div style={{display:"flex", alignContent:"center", alignItems:"center"}}>
+                <h3 className='mr-3'>Brand</h3>
+                <Breadcrumb
+                    items={[
+                        {
+                            title: (
+                            <>
+                                <span>Jaja Auto</span>
+                            </>
+                            ),
+                        },
+                        {
+                            title: 'Brand',
+                        },
+                        ]}
+                className='mb-2'/>
+            </div>
             <Widget>
                 <Button type="primary" onClick={openAddModal} style={{ marginBottom: 16 }} className="m-3 float-right">
                     <PlusOutlined /> Add Brand
@@ -263,9 +265,16 @@ const Brand = () => {
                     <Form.Item
                         name="hex_color"
                         label="Hex Color"
-                        rules={[{ required: true, message: 'Please enter the Hex color!' }]}
+                        rules={[{ required: true, message: 'Please select the Hex color!' }]}
                     >
-                        <Input />
+                        <ColorPicker 
+                            defaultValue="#1677ff"
+                            showText
+                            color="#1677ff"  // Default color
+                            onChange={(color) => {
+                                form.setFieldsValue({ hex_color: color.toHexString() });
+                            }} 
+                        />
                     </Form.Item>
                 </Form>
             </Modal>
@@ -310,7 +319,14 @@ const Brand = () => {
                         label="Hex Color"
                         rules={[{ required: true, message: 'Please enter the Hex color!' }]}
                     >
-                        <Input />
+                        <ColorPicker 
+                            defaultValue="hex_color"
+                            showText
+                            color="hex_color"  // Default color
+                            onChange={(color) => {
+                                form.setFieldsValue({ hex_color: color.toHexString() });
+                            }} 
+                        />
                     </Form.Item>
                 </Form>
             </Modal>

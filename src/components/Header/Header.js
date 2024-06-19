@@ -126,18 +126,19 @@ const Header = (props) => {
         </Dropdown> */}
         <Dropdown isOpen={notificationsOpen} toggle={() => toggleNotifications()} nav id="basic-nav-dropdown" className="ml-3">
           <DropdownToggle nav caret className="navbar-dropdown-toggle">
-            <span className={`${s.avatar} rounded-circle float-left mr-2`}>
+            {/* <span className={`${s.avatar} rounded-circle float-left mr-2`}>
               <img src={userImg} alt="User"/>
-            </span>
-            <span className="small d-none d-sm-block ml-1 mr-2 body-1">Christina Carey</span>
+            </span> */}
+            <span className="small d-none d-sm-block ml-1 mr-2 body-1">Admin Jaja Auto</span>
           </DropdownToggle>
           <DropdownMenu className="navbar-dropdown profile-dropdown" style={{ width: "194px" }}>
-            <DropdownItem className={s.dropdownProfileItem}><ProfileIcon/><span>Profile</span></DropdownItem>
+            {/* <DropdownItem className={s.dropdownProfileItem}><ProfileIcon/><span>Profile</span></DropdownItem>
             <DropdownItem className={s.dropdownProfileItem}><TasksIcon/><span>Tasks</span></DropdownItem>
-            <DropdownItem className={s.dropdownProfileItem}><MessagesIcon/><span>Messages</span></DropdownItem>
+            <DropdownItem className={s.dropdownProfileItem}><MessagesIcon/><span>Messages</span></DropdownItem> */}
             <NavItem>
               <NavLink onClick={() => doLogout()} href="#">
-                <button className="btn btn-primary rounded-pill mx-auto logout-btn" type="submit"><img src={logoutIcon} alt="Logout"/><span className="ml-1">Logout</span></button>
+                {/* <button className="btn btn-primary rounded-pill mx-auto logout-btn" type="submit"><img src={logoutIcon} alt="Logout"/><span className="ml-1">Logout</span></button> */}
+                <button className="btn btn-primary rounded-pill mx-auto logout-btn" type="submit"><span className="ml-1">Logout</span></button>
               </NavLink>
             </NavItem>
           </DropdownMenu>

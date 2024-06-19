@@ -40,7 +40,7 @@ const Login = (props) => {
     setState({ ...state, [event.target.name]: event.target.value })
   }
 
-  const { from } = props.location.state || { from: { pathname: '/jaja-auto' }};
+  const { from } = props.location.state || { from: { pathname: '/dashboard' }};
   if (hasToken(JSON.parse(localStorage.getItem('authenticated')))) {
     return (
       <Redirect to={from} />
@@ -48,7 +48,7 @@ const Login = (props) => {
   }
 
   if (props.isAuthenticated) {
-    return <Redirect to="/jaja-auto" />;
+    return <Redirect to="/dashboard" />;
   }
 
   return (
@@ -59,13 +59,10 @@ const Login = (props) => {
             <Widget className="widget-auth widget-p-lg">
               <div className="d-flex align-items-center justify-content-between py-3">
                 <p className="auth-header mb-0">Login</p>
-                <div className="logo-block">
-                  <SofiaLogo />
-                  <p className="mb-0">SOFIA</p>
-                </div>
-              </div>
-              <div className="auth-info my-2">
-                <p>This is a real app with Node.js backend - use <b>"admin@flatlogic.com / password"</b> to login!</p>
+                {/* <div className="logo-block">
+                <img src="https://auto.jaja.id/img/logo-putih.3bbe126c.png" alt="Contoh Gambar" style={{width: "150px"}}/>
+                  <p className="mb-0">Jaja Auto</p>
+                </div> */}
               </div>
               <form onSubmit={(event) => doLogin(event)}>
                 <FormGroup className="my-3">
@@ -84,7 +81,6 @@ const Login = (props) => {
                 <FormGroup  className="my-3">
                   <div className="d-flex justify-content-between">
                     <FormText>Password</FormText>
-                    <Link to="/error">Forgot password?</Link>
                   </div>
                   <Input
                     id="password"
@@ -100,18 +96,6 @@ const Login = (props) => {
                 <div className="bg-widget d-flex justify-content-center">
                   <Button className="rounded-pill my-3" type="submit" color="secondary-red">Login</Button>
                 </div>
-                <p className="dividing-line my-3">&#8195;Or&#8195;</p>
-                <div className="d-flex align-items-center my-3">
-                  <p className="social-label mb-0">Login with</p>
-                  <div className="socials">
-                    <a href="https://flatlogic.com/"><GoogleIcon /></a>
-                    <a href="https://flatlogic.com/"><TwitterIcon /></a>
-                    <a href="https://flatlogic.com/"><FacebookIcon /></a>
-                    <a href="https://flatlogic.com/"><GithubIcon /></a>
-                    <a href="https://flatlogic.com/"><LinkedinIcon /></a>
-                  </div>
-                </div>
-                <Link to="/register">Don’t have an account? Sign Up here</Link>
               </form>
             </Widget>
           </Col>
@@ -122,7 +106,6 @@ const Login = (props) => {
           </Col>
         </Row>
       </Container>
-      <Footer />
     </div>
   )
 }

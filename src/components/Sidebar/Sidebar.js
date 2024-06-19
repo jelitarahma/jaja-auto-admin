@@ -9,6 +9,7 @@ import { changeActiveSidebarItem } from "../../actions/navigation.js";
 // import SofiaLogo from "../Icons/SofiaLogo.js";
 import JajaLogo from "../../assets/images/jaja-auto-white-v2.png";
 import cn from "classnames";
+import { Image } from 'antd';
 
 const Sidebar = (props) => {
 
@@ -32,7 +33,7 @@ const Sidebar = (props) => {
   return (
     <nav className={cn(s.root, {[s.sidebarOpen]: burgerSidebarOpen})} >
       <header className={s.logo}>
-        <img src={JajaLogo} alt="Contoh Gambar" className={s.LogoImg}/>
+        <img src="https://auto.jaja.id/img/logo-putih.3bbe126c.png" alt="Contoh Gambar" className={s.LogoImg}/>
         <span className={s.title}>Jaja Auto</span>
       </header>
       <ul className={s.nav}>
@@ -42,27 +43,27 @@ const Sidebar = (props) => {
           header="Dashboard"
           isHeader
           iconName={<i className={'eva eva-home-outline'}/>}
-          link="/jaja-auto/dashboard"
+          link="/dashboard/dashboard"
           index="dashboard"
           badge="9"
         /> */}
         <LinksGroup
           onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
           activeItem={props.activeItem}
-          header="Jaja Dashboard"
+          header="Dashboard"
           isHeader
           iconName={<i className={'eva eva-home-outline'}/>}
-          link="/jaja-auto/jaja-dashboard"
+          link="/dashboard/jaja-dashboard"
           index="jaja-dashboard"
         />
         <LinksGroup
           onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
           activeItem={props.activeItem}
-          header="Kategori"
+          header="Order"
           isHeader
-          iconName={<i className={'eva eva-grid-outline'}/>}
-          link="/jaja-auto/kategori"
-          index="kategori"
+          iconName={<i className={'eva eva-shopping-bag-outline'}/>}
+          link="/dashboard/order"
+          index="order"
         />
         <LinksGroup
           onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
@@ -70,7 +71,7 @@ const Sidebar = (props) => {
           header="Product"
           isHeader
           iconName={<i className={'eva eva-car-outline'}/>}
-          link="/jaja-auto/product"
+          link="/dashboard/product"
           index="product"
         />
         <LinksGroup
@@ -79,7 +80,7 @@ const Sidebar = (props) => {
           header="Jenis Mobil"
           isHeader
           iconName={<i className={'eva eva-settings-outline'}/>}
-          link="/jaja-auto/jenisMobil"
+          link="/dashboard/jenisMobil"
           index="jenisMobil"
         />
         <LinksGroup
@@ -88,7 +89,7 @@ const Sidebar = (props) => {
           header="Brand"
           isHeader
           iconName={<i className={'eva eva-globe-2-outline'}/>}
-          link="/jaja-auto/brand"
+          link="/dashboard/brand"
           index="brand"
         />
         <LinksGroup
@@ -97,17 +98,26 @@ const Sidebar = (props) => {
           header="Bank"
           isHeader
           iconName={<i className={'eva eva-credit-card-outline'}/>}
-          link="/jaja-auto/bank"
+          link="/dashboard/bank"
           index="bank"
         />
         <LinksGroup
           onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
           activeItem={props.activeItem}
-          header="Order"
+          header="Kategori"
           isHeader
-          iconName={<i className={'eva eva-shopping-bag-outline'}/>}
-          link="/jaja-auto/order"
-          index="order"
+          iconName={<i className={'eva eva-grid-outline'}/>}
+          link="/dashboard/kategori"
+          index="kategori"
+        />
+        <LinksGroup
+          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
+          activeItem={props.activeItem}
+          header="Config"
+          isHeader
+          iconName={<i className={'eva eva-percent'}/>}
+          link="/dashboard/config-bunga"
+          index="ConfigBunga"
         />
         <LinksGroup
           onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
@@ -115,8 +125,8 @@ const Sidebar = (props) => {
           header="Bunga"
           isHeader
           iconName={<i className={'eva eva-percent'}/>}
-          link="/jaja-auto/config-bunga"
-          index="ConfigBunga"
+          link="/dashboard/bunga"
+          index="Bunga"
         />
         {/* <h5 className={s.navTitle}>jaja-auto</h5> */}
         {/* <LinksGroup

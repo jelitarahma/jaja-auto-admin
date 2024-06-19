@@ -3,6 +3,8 @@ import { Table, Button, Modal, Popconfirm, Space, Badge, Form, Input, Upload, me
 import { PlusOutlined, UploadOutlined, EditOutlined, DeleteOutlined, EyeOutlined  } from '@ant-design/icons';
 import Widget from '../../components/Widget/Widget';
 import { useHistory } from 'react-router-dom';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const Product = () => {
     const [data, setData] = useState([]);
@@ -30,7 +32,7 @@ const Product = () => {
     }, []);
 
     const fetchData = () => {
-        fetch(`https://staging-api.jaja.id/product/get-product?page=1&limit=5&keyword=`, {
+        fetch(`https://staging-api.jaja.id/product/get-product?keyword=`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${token}`
@@ -38,7 +40,7 @@ const Product = () => {
         })
             .then(response => response.json())
             .then(data => {
-                setData(data.data.data)
+                setData(data.data)
                 setLoading(false);
             })
             .catch(error => {
@@ -194,7 +196,7 @@ const Product = () => {
     };
 
     const handleDetail = async (record) => {
-        history.push(`/jaja-auto/product/${record.slug}`);
+        history.push(`/dashboard/product/${record.slug}`);
         // try {
         //     const response = await fetch(`https://staging-api.jaja.id/product/get-product-detail?slug=${record.slug}`, {
         //         method: "GET",
@@ -281,21 +283,23 @@ const Product = () => {
 
     return (
         <>
-            <h3>Product</h3>
-            <Breadcrumb
-                items={[
-                {
-                    title: (
-                    <>
-                        <span>Jaja Auto</span>
-                    </>
-                    ),
-                },
-                {
-                    title: 'Product',
-                },
-                ]}
-            className='mb-4'/>
+            <div style={{display:"flex", alignContent:"center", alignItems:"center"}}>
+                <h3 className='mr-3'>Product</h3>
+                <Breadcrumb
+                    items={[
+                        {
+                            title: (
+                            <>
+                                <span>Jaja Auto</span>
+                            </>
+                            ),
+                        },
+                        {
+                            title: 'Product',
+                        },
+                        ]}
+                className='mb-2'/>
+            </div>
             <Widget>
                 <Button type="primary" onClick={() => setModalAddVisible(true)} style={{ marginBottom: 16 }} className="m-3 float-right">
                     <PlusOutlined /> Add Product
@@ -355,7 +359,14 @@ const Product = () => {
                         label="Deskripsi"
                         rules={[{ required: true, message: 'Please enter the Product Deskripsi!' }]}
                     >
-                         <Input />
+                        <CKEditor
+                            editor={ClassicEditor}
+                            data="<p>Enter the product description here...</p>"
+                            onChange={(event, editor) => {
+                                const data = editor.getData();
+                                form.setFieldsValue({ deskripsi: data });
+                            }}
+                        />
                     </Form.Item>
                     <Form.Item
                         name="id_produk_jenis"

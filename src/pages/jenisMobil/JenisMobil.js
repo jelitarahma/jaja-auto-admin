@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Modal, Popconfirm, Space, Badge, Form, Input, Upload, message, Breadcrumb } from 'antd';
+import { Table, Button, Modal, Popconfirm, Space, Badge, Form, Input, Upload, message, Breadcrumb, Select } from 'antd';
 import { PlusOutlined, UploadOutlined, EditOutlined, DeleteOutlined, EyeOutlined  } from '@ant-design/icons';
 import Widget from '../../components/Widget/Widget';
 
@@ -14,6 +14,7 @@ const JenisMobil = () => {
     const token = localStorage.getItem("token");
     const [modalDetailVisible, setModalDetailVisible] = useState(false);
     const [detailItem, setDetailItem] = useState(null);
+    const { Option } = Select;
 
     useEffect(() => {
         console.log("INI TOKEN", token);
@@ -206,22 +207,23 @@ const JenisMobil = () => {
 
     return (
         <>
-            <h3>Jenis Mobil</h3>
-            <Breadcrumb
-                items={[
-                {
-                    title: (
-                    <>
-                        <span>Jaja Auto</span>
-                    </>
-                    ),
-                },
-                {
-                    title: 'Jenis Mobil',
-                },
-                ]}
-            className='mb-4'/>
-
+            <div style={{display:"flex", alignContent:"center", alignItems:"center"}}>
+                <h3 className='mr-3'>Jenis Mobil</h3>
+                <Breadcrumb
+                    items={[
+                        {
+                            title: (
+                            <>
+                                <span>Jaja Auto</span>
+                            </>
+                            ),
+                        },
+                        {
+                            title: 'Jenis Mobil',
+                        },
+                        ]}
+                className='mb-2'/>
+            </div>
             <Widget>
                 <Button type="primary" onClick={() => setModalAddVisible(true)} style={{ marginBottom: 16 }} className="m-3 float-right">
                     <PlusOutlined /> Add Jenis Mobil
@@ -316,9 +318,12 @@ const JenisMobil = () => {
                     <Form.Item
                         name="status"
                         label="Status"
-                        rules={[{ required: true, message: 'Please enter the status!' }]}
+                        rules={[{ required: true, message: 'Please select the status!' }]}
                     >
-                        <Input />
+                        <Select placeholder="Select status">
+                            <Option value={1}>Aktif</Option>
+                            <Option value={0}>Non-Aktif</Option>
+                        </Select>
                     </Form.Item>
                 </Form>
             </Modal>

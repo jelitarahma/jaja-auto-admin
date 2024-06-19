@@ -12,6 +12,8 @@ import {
   message,
   Breadcrumb,
   Select,
+  Row,
+  Col,
 } from "antd";
 import {
   PlusOutlined,
@@ -22,6 +24,8 @@ import {
 } from "@ant-design/icons";
 import Widget from "../../components/Widget/Widget";
 import { useParams } from "react-router-dom";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const { Option } = Select;
 
@@ -43,6 +47,7 @@ const DetailProduct = () => {
   const [modalAddGradeVisible, setModalAddGradeVisible] = useState(false);
   const [modalEditVisible, setModalEditVisible] = useState(false);
   const [modalEditGradeVisible, setModalEditGradeVisible] = useState(false);
+  const [deskripsi, setDeskripsi] = useState('');
 
   useEffect(() => {
     handleDetail();
@@ -75,6 +80,7 @@ const DetailProduct = () => {
         setProduct(data.data); // Menyimpan detail kategori dalam state
         setVariasi(data.data.variasi);
         setGrades(data.data.grades);
+        setDeskripsi(data.data.deskripsi);
         console.log();
       } else {
         message.error(
@@ -268,6 +274,7 @@ const DetailProduct = () => {
       );
     }
   };
+  
 
   const handleGrade = async (values, endpoint) => {
     try {
@@ -367,7 +374,7 @@ const DetailProduct = () => {
     },
     {
       title: "Nama",
-      dataIndex: "jenis_gambar",
+      dataIndex: "name",
     },
     {
       title: "Image",
@@ -481,73 +488,100 @@ const DetailProduct = () => {
   return (
     <>
       {product && (
-        <Form
-          form={form}
-          layout="vertical"
-          initialValues={product}
-          onFinish={handleUpdate}
-        >
+        <div>
+          <h3 className="p-1">Detail Product</h3>
+        <Widget className="p-4">
+          <Form
+            form={form}
+            layout="vertical"
+            initialValues={product}
+            onFinish={handleUpdate}
+          >
           <Form.Item name="slug" hidden>
             <Input type="hidden" />
           </Form.Item>
-          <Form.Item label="Code" name="code">
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="brand"
-            label="Brand"
-            // rules={[{ required: true, message: 'Please select Product Brand!' }]}
-          >
-            <Select placeholder="Select Brand">
-              {brandOptions.map((brand) => (
-                <Option key={brand.id_merek} value={brand.id_merek}>
-                  {brand.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item label="Name" name="name">
-            <Input />
-          </Form.Item>
-          <Form.Item label="Description" name="deskripsi">
-            <Input.TextArea />
-          </Form.Item>
-          <Form.Item
-            name="id_produk_jenis"
-            label="Jenis Mobil"
-            // rules={[{ required: true, message: 'Please select jenis mobil!' }]}
-          >
-            <Select placeholder="Select jenis mobil">
-              {jenisOptions.map((jenis) => (
-                <Option key={jenis.id} value={jenis.id}>
-                  {jenis.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-
-          <Form.Item
-            name="id_produk_kategori"
-            label="Kategori"
-            // rules={[{ required: true, message: 'Please select kategori!' }]}
-          >
-            <Select placeholder="Select kategori">
-              {kategoriOptions.map((kategori) => (
-                <Option key={kategori.id} value={kategori.id}>
-                  {kategori.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item name="status" hidden>
-            <Input type="hidden" />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Update Product
-            </Button>
-          </Form.Item>
-        </Form>
+            <Row>
+              <Col span={12} className="p-2">
+                <Form.Item label="Code" name="code">
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col span={12} className="p-2">
+                <Form.Item
+                  name="brand"
+                  label="Brand"
+                  // rules={[{ required: true, message: 'Please select Product Brand!' }]}
+                >
+                  <Select placeholder="Select Brand">
+                    {brandOptions.map((brand) => (
+                      <Option key={brand.id_merek} value={brand.id_merek}>
+                        {brand.name}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={8} className="p-2">
+                <Form.Item label="Name" name="name">
+                  <Input />
+                </Form.Item>
+              </Col>
+              <Col span={8} className="p-2">
+                <Form.Item
+                  name="id_produk_jenis"
+                  label="Jenis Mobil"
+                  // rules={[{ required: true, message: 'Please select jenis mobil!' }]}
+                >
+                  <Select placeholder="Select jenis mobil">
+                    {jenisOptions.map((jenis) => (
+                      <Option key={jenis.id} value={jenis.id}>
+                        {jenis.name}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+              <Col span={8} className="p-2">
+                <Form.Item
+                  name="id_produk_kategori"
+                  label="Kategori"
+                  // rules={[{ required: true, message: 'Please select kategori!' }]}
+                >
+                  <Select placeholder="Select kategori">
+                    {kategoriOptions.map((kategori) => (
+                      <Option key={kategori.id} value={kategori.id}>
+                        {kategori.name}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+              </Col>
+            </Row>
+            
+            <Form.Item label="Description" name="deskripsi" className="p-2">
+              <CKEditor
+                editor={ClassicEditor}
+                data={deskripsi} // Set CKEditor data with deskripsi state
+                onChange={(event, editor) => {
+                  const data = editor.getData();
+                  setDeskripsi(data); // Update deskripsi state on change
+                }}
+              />
+            </Form.Item>
+            
+            <Form.Item name="status" hidden>
+              <Input type="hidden" />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Update Product
+              </Button>
+            </Form.Item>
+          </Form>
+        </Widget>
+        </div>
       )}
 
       <h3 className="p-1">Image Product</h3>
@@ -563,7 +597,7 @@ const DetailProduct = () => {
         </Button>
         <Table
           columns={columns}
-          dataSource={variasi}
+          dataSource={imagesProduct}
           loading={loading}
           pagination={pagination}
           onChange={(pagination) => setPagination(pagination)}

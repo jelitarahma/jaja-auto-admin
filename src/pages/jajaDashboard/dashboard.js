@@ -27,6 +27,7 @@ const { Panel } = Collapse;
 
 const JajaDashboard = () => {
   const [checkboxes, setCheckboxes] = useState([true, false]);
+  const [loading, setLoading] = useState(true);
   const token = localStorage.getItem("token");
   const [dataTopProduct, setData] = useState([]);
 
@@ -49,16 +50,18 @@ const JajaDashboard = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        const { top_view, top_category, top_latest } = data.data;
-        setTopView(top_view);
-        setTopCategory(top_category);
-        setTopLatest(top_latest);
+        const { top_view, top_category, top_latest } = data.data[0];
+        setTopView(top_view || []);
+        setTopCategory(top_category || []);
+        setTopLatest(top_latest || []);
+        setLoading(false);
         console.log("Top View:", top_view);
         console.log("Top Category:", top_category);
         console.log("Top Latest:", top_latest);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setLoading(false);
       });
   };
 

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Modal, Button, Space, Breadcrumb } from 'antd';
+import { Table, Modal, Button, Space, Breadcrumb, Flex } from 'antd';
+import { EyeOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
+
 
 const Order = () => {
     const token = localStorage.getItem("token");
@@ -7,6 +10,8 @@ const Order = () => {
     const [detailModalVisible, setDetailModalVisible] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [orderDetail, setOrderDetail] = useState(null);
+    const [pagination, setPagination] = useState({ current: 1, pageSize: 10 });
+    const history = useHistory();
 
     useEffect(() => {
         fetchOrders();
@@ -22,8 +27,7 @@ const Order = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                const sortedOrders = data.data.data.sort((a, b) => a.id - b.id);
-                setOrders(sortedOrders);
+                setOrders(data.data.data);
             } else {
                 console.error('Failed to fetch orders');
             }
@@ -45,14 +49,49 @@ const Order = () => {
                 setOrderDetail(data.data);
                 setDetailModalVisible(true);
             } else {
-                console.error('Failed to fetch order detail');
+                if (response.status === 500) {
+                    Modal.error({
+                        title: 'Detail',
+                        content: 'Data detail tidak ditemukan',
+                    });
+                } else {
+                    console.error('Failed to fetch order detail');
+                }
             }
         } catch (error) {
             console.error('Error fetching order detail:', error);
+            Modal.error({
+                title: 'Network Error',
+                content: 'Failed to fetch order detail due to network issue. Please check your connection and try again.',
+            });
         }
     };
 
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-indexed
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        
+        return `${day}-${month}-${year} ${hours}:${minutes}`;
+    };
+
+    const formatToRupiah = (number) => {
+        return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(number);
+      };
+
+    const handleDetail = (record) => {
+        history.push(`/dashboard/order/${record.id}`);
+    }
+
     const columns = [
+        {
+            title: 'No',
+            dataIndex: 'no',
+            render: (text, record, index) => (pagination.current - 1) * pagination.pageSize + index + 1
+        },
         {
             title: 'Invoice',
             dataIndex: 'invoice',
@@ -74,21 +113,43 @@ const Order = () => {
             key: 'email',
         },
         {
+            title: 'Nama Lengkap',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        {
+            title: 'No Telp',
+            dataIndex: 'contact_number',
+            key: 'contact_number',
+        },
+        {
             title: 'Total Price',
             dataIndex: 'grand_total',
             key: 'grand_total',
+            render: (text) => formatToRupiah(text),
         },
         {
             title: 'Added Date',
             dataIndex: 'date_added',
             key: 'date_added',
+            render: (text) => formatDate(text),
+            width: 120
         },
+        // {
+        //     title: 'Action',
+        //     key: 'action',
+        //     render: (text, record) => (
+        //         <Space size="middle">
+        //             <Button type="default" icon={<EyeOutlined />} onClick={() => fetchOrderDetail(record.id)} />
+        //         </Space>
+        //     ),
+        // },
         {
-            title: 'Action',
-            key: 'action',
+            title: 'Detail',
+            key: 'detail',
             render: (text, record) => (
                 <Space size="middle">
-                    <Button onClick={() => fetchOrderDetail(record.id)}>View Detail</Button>
+                    <Button type="default" icon={<EyeOutlined />} onClick={() => handleDetail(record)} />
                 </Space>
             ),
         },
@@ -96,23 +157,25 @@ const Order = () => {
 
     return (
         <>
-            <h3>Order</h3>
-            <Breadcrumb
-                items={[
-                {
-                    title: (
-                    <>
-                        <span>Jaja Auto</span>
-                    </>
-                    ),
-                },
-                {
-                    title: 'Order',
-                },
-                ]}
-            className='mb-4'/>
+            <div style={{display:"flex", alignContent:"center", alignItems:"center"}}>
+                <h3 className='mr-3'>Order</h3>
+                <Breadcrumb
+                    items={[
+                    {
+                        title: (
+                        <>
+                            <span>Jaja Auto</span>
+                        </>
+                        ),
+                    },
+                    {
+                        title: 'Order',
+                    },
+                    ]}
+                className='mb-2'/>
+            </div>
             <div>
-                <Table columns={columns} dataSource={orders} />
+                <Table columns={columns} dataSource={orders} pagination={pagination} onChange={(pagination) => setPagination(pagination)} scroll={{ x: true }}/>
                 <Modal
                     title="Order Detail"
                     visible={detailModalVisible}
